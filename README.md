@@ -1,6 +1,6 @@
 # grunt-tslint
 
-> A linter for TypeScript.
+> A grunt plugin for tslint.
 
 ## Getting Started
 This plugin requires [Grunt](http://gruntjs.com/) `~0.4.1`
@@ -41,7 +41,7 @@ A JSON configuration object passed into tslint.
 ```
 grunt.initConfig({
   tslint: {
-    options: {    
+    options: {
       configuration: grunt.file.readJSON(".tslintrc")
     },
     files: {
