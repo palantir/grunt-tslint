@@ -1,22 +1,22 @@
 {
-  "name": "grunt-contrib-tslint",
+  "name": "grunt-tslint",
   "description": "Linter for TypeScript.",
   "version": "0.1.0",
-  "homepage": "https://github.com/palantir/grunt-contrib-tslint",
+  "homepage": "https://github.com/palantir/grunt-tslint",
   "author": {
     "name": "Palantir Technologies, Inc."
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/palantir/grunt-contrib-tslint.git"
+    "url": "git://github.com/palantir/grunt-tslint.git"
   },
   "bugs": {
-    "url": "https://github.com/palantir/grunt-contrib-tslint/issues"
+    "url": "https://github.com/palantir/grunt-tslint/issues"
   },
   "licenses": [
     {
       "type": "Apache",
-      "url": "https://github.com/palantir/grunt-contrib-tslint/blob/master/LICENSE.txt"
+      "url": "https://github.com/palantir/grunt-tslint/blob/master/LICENSE.txt"
     }
   ],
   "main": "Gruntfile.js",
