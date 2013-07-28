@@ -5,11 +5,11 @@
 ## Getting Started
 This plugin requires [Grunt](http://gruntjs.com/) `~0.4.1`
 
-```npm install grunt-tslint --save-dev```
+	npm install grunt-tslint --save-dev
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
-```grunt.loadNpmTasks('grunt-tslint');```
+	grunt.loadNpmTasks('grunt-tslint');
 
 ## The "tslint" task
 
