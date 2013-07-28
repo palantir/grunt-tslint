@@ -25,31 +25,28 @@ module.exports = function(grunt) {
       formatter: "prose"
     });
 
+    var retValue = true;
     // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      f.src.forEach(function(filepath) {
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-        } else {
-          var contents = grunt.file.read(filepath);
-          var linter = new Linter(filepath, contents, options);
+    this.filesSrc.forEach(function(filepath) {
+      if (!grunt.file.exists(filepath)) {
+        grunt.log.warn('Source file "' + filepath + '" not found.');
+      } else {
+        var contents = grunt.file.read(filepath);
+        var linter = new Linter(filepath, contents, options);
 
-          var result = linter.lint();
+        var result = linter.lint();
 
-          if(result.failureCount > 0) {
-            result.output.split("\n").forEach(function(line) {
-              if (line !== "") {
-                var split = line.split(":");
-                var prefix = split.shift() + ":";
-
-                grunt.log.writeln(prefix.red + split.join(""));
-              }
-            });
-            return false;
-          }
+        if(result.failureCount > 0) {
+          result.output.split("\n").forEach(function(line) {
+            if(line !== "") {
+              grunt.log.error(line);
+            }
+          });
+          retValue = false;
         }
-      });
+      }
     });
+    return retValue;
   });
 
 };
