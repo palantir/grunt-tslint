@@ -16,18 +16,16 @@ Once the plugin has been installed, it may be enabled inside your Gruntfile with
 ### Overview
 In your project's Gruntfile, add a section named `tslint` to the data object passed into `grunt.initConfig()`.
 
-```
-grunt.initConfig({
-  tslint: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
-```
+	grunt.initConfig({
+	  tslint: {
+	    options: {
+    	  // Task-specific options go here.
+	    },
+	    your_target: {
+    	  // Target-specific file lists and/or options go here.
+	    },
+	  },
+	})
 
 ### Options
 
@@ -38,18 +36,16 @@ A JSON configuration object passed into tslint.
 
 ### Usage Example
 
-```
-grunt.initConfig({
-  tslint: {
-    options: {
-      configuration: grunt.file.readJSON(".tslintrc")
-    },
-    files: {
-      src: ['src/file1.ts', 'src/file2.ts']
-    }
-  }
-})
-```
+	grunt.initConfig({
+	  tslint: {
+	    options: {
+	      configuration: grunt.file.readJSON(".tslintrc")
+	    },
+	    files: {
+	      src: ['src/file1.ts', 'src/file2.ts']
+	    }
+	  }
+	})
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
