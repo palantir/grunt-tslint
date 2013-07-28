@@ -29,23 +29,17 @@ module.exports = function(grunt) {
     },
 
     // Configuration to be run (and then tested).
-    contrib_tslint: {
-      default_options: {
+    tslint: {
+      errors: {
         options: {
+          formatter: "json",
+          configuration: grunt.file.readJSON(".tslintrc")
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+          'tmp/errors1': ['test/fixtures/errorFile1.ts'],
+          'tmp/errors2': ['test/fixtures/errorFile2.ts']
+        }
+      }
     },
 
     // Unit tests.
@@ -65,7 +59,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'contrib_tslint', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'tslint', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

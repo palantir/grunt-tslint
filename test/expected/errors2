@@ -1,0 +1,53 @@
+{
+  "failureCount": 6,
+  "format":"json",
+  "output": [
+  {
+    "name": "test/fixtures/errorFile2.ts",
+    "position": {
+      "line": 3,
+      "character": 11
+    },
+    "failure": "missing whitespace"
+  },
+  {
+    "name":"test/fixtures/errorFile2.ts",
+    "position": {
+      "line": 2,
+      "character": 0
+      },
+      "failure": "misplaced opening brace"
+  },
+  {
+    "name": "test/fixtures/errorFile2.ts",
+    "position": {
+      "line": 3,
+      "character":35
+    },
+    "failure": "missing whitespace"
+  },
+  {
+    "name": "test/fixtures/errorFile2.ts",
+    "position": {
+      "line": 5,
+      "character":12
+    },
+    "failure": "forbidden eval"
+  },
+  {
+    "name": "test/fixtures/errorFile2.ts",
+    "position": {
+      "line": 8,
+      "character": 1
+    },
+    "failure": "file should end with a newline"
+  },
+  {
+    "name": "test/fixtures/errorFile2.ts",
+    "position": {
+      "line": 4,
+      "character": 0
+    },
+    "failure": "use of debugger statements is disallowed"
+  }]
+}

@@ -1,0 +1,20 @@
+{
+  "failureCount": 2,
+  "format": "json",
+  "output": [{
+    "name": "test/fixtures/errorFile1.ts",
+    "position": {
+      "line": 0,
+      "character": 9
+    },
+    "failure": "' should be \""
+  },
+  {
+    "name": "test/fixtures/errorFile1.ts",
+    "position": {
+      "line": 0,
+      "character":4
+    },
+    "failure": "variable name must be in camelcase or uppercase"
+  }]
+}

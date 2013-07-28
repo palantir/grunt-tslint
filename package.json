@@ -16,7 +16,7 @@
   "licenses": [
     {
       "type": "Apache",
-      "url": "https://github.com/palantir/grunt-contrib-tslint/blob/master/LICENSE-Apache"
+      "url": "https://github.com/palantir/grunt-contrib-tslint/blob/master/LICENSE.txt"
     }
   ],
   "main": "Gruntfile.js",
@@ -25,6 +25,9 @@
   },
   "scripts": {
     "test": "grunt test"
+  },
+  "dependencies": {
+    "tslint": "~0.1.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
