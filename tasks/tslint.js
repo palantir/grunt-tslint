@@ -13,8 +13,9 @@ module.exports = function(grunt) {
   var Linter = require("tslint");
 
   grunt.registerMultiTask('tslint', 'A linter for TypeScript.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({});
+    var options = this.options({
+      formatter: "prose"
+    });
 
     // Iterate over all specified file groups.
     this.files.forEach(function(f) {
@@ -26,9 +27,9 @@ module.exports = function(grunt) {
           var linter = new Linter(filepath, contents, options);
 
           var result = linter.lint();
-          grunt.file.write(f.dest, JSON.stringify(result));
 
           if(result.failureCount > 0) {
+            grunt.log.write(result.output);
             return false;
           }
         }
