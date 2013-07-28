@@ -37,7 +37,14 @@ module.exports = function(grunt) {
           var result = linter.lint();
 
           if(result.failureCount > 0) {
-            grunt.log.write(result.output);
+            result.output.split("\n").forEach(function(line) {
+              if (line !== "") {
+                var split = line.split(":");
+                var prefix = split.shift() + ":";
+
+                grunt.log.writeln(prefix.red + split.join(""));
+              }
+            });
             return false;
           }
         }
