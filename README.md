@@ -1,4 +1,4 @@
-# grunt-tslint
+# grunt-tslint [![NPM version](https://badge.fury.io/js/grunt-tslint.png)](http://badge.fury.io/js/grunt-tslint)
 
 > A grunt plugin for tslint.
 
