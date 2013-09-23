@@ -27,7 +27,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "tslint": "~0.2.1"
+    "tslint": "~0.3.0"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
