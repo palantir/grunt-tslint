@@ -1,7 +1,7 @@
 {
   "name": "grunt-tslint",
   "description": "Linter for TypeScript.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/palantir/grunt-tslint",
   "author": {
     "name": "Palantir Technologies, Inc."
@@ -27,7 +27,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "tslint": "~0.3.2"
+    "tslint": "~0.3.3"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
