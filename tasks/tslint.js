@@ -22,7 +22,8 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask("tslint", "A linter for TypeScript.", function() {
     var options = this.options({
-      formatter: "prose"
+      formatter: "prose",
+      outputFile: null
     });
 
     var retValue = true;
@@ -37,11 +38,23 @@ module.exports = function(grunt) {
         var result = linter.lint();
 
         if(result.failureCount > 0) {
+          var outputString = "";
+          var outputFile = options.outputFile;
+          if (outputFile != null) {
+            outputString = grunt.file.read(outputFile);
+          }
           result.output.split("\n").forEach(function(line) {
             if(line !== "") {
-              grunt.log.error(line);
+              if (outputFile != null) {
+                outputString += line + "\n";
+              } else {
+                grunt.log.error(line);
+              }
             }
           });
+          if(outputFile != null) {
+            grunt.file.write(outputFile, outputString);
+          }
           retValue = false;
         }
       }
