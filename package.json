@@ -15,7 +15,7 @@
   },
   "licenses": [
     {
-      "type": "Apache",
+      "type": "Apache-2.0",
       "url": "https://github.com/palantir/grunt-tslint/blob/master/LICENSE.txt"
     }
   ],
