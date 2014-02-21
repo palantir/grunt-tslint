@@ -24,10 +24,10 @@ module.exports = function(grunt) {
     var options = this.options({
       formatter: "prose"
     });
+    var done = this.async();
 
-    var retValue = true;
-    // Iterate over all specified file groups.
-    this.filesSrc.forEach(function(filepath) {
+    // Iterate over all specified file groups, async for 'streaming' output on large projects
+    grunt.util.async.reduce(this.filesSrc, true, function(success, filepath, callback) {
       if (!grunt.file.exists(filepath)) {
         grunt.log.warn('Source file "' + filepath + '" not found.');
       } else {
@@ -42,11 +42,23 @@ module.exports = function(grunt) {
               grunt.log.error(line);
             }
           });
-          retValue = false;
+          success = false;
         }
       }
+      // Using setTimout as process.nextTick() doesn't flush
+      setTimeout(function() {
+        callback(null, success);
+      }, 1);
+
+    }, function(err, success) {
+        if (err) {
+            done(err);
+        } else if (!success) {
+            done(false);
+        } else {
+            done();
+        }
     });
-    return retValue;
   });
 
 };
