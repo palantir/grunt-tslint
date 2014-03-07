@@ -1,6 +1,6 @@
 # grunt-tslint [![NPM version](https://badge.fury.io/js/grunt-tslint.png)](http://badge.fury.io/js/grunt-tslint)
 
-> A grunt plugin for tslint.
+> A grunt plugin for [tslint](https://github.com/palantir/tslint).
 
 ## Getting Started
 This plugin requires [Grunt](http://gruntjs.com/) `~0.4.1`
