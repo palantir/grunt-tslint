@@ -1,6 +1,6 @@
 # grunt-tslint [![NPM version](https://badge.fury.io/js/grunt-tslint.png)](http://badge.fury.io/js/grunt-tslint)
 
-> A grunt plugin for tslint.
+> A grunt plugin for [tslint](https://github.com/palantir/tslint).
 
 ## Getting Started
 This plugin requires [Grunt](http://gruntjs.com/) `~0.4.1`
@@ -39,7 +39,7 @@ A JSON configuration object passed into tslint.
 	grunt.initConfig({
 	  tslint: {
 	    options: {
-	      configuration: grunt.file.readJSON(".tslintrc")
+	      configuration: grunt.file.readJSON("tslint.json")
 	    },
 	    files: {
 	      src: ['src/file1.ts', 'src/file2.ts']

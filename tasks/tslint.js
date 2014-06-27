@@ -26,6 +26,7 @@ module.exports = function(grunt) {
       outputFile: null
     });
     var done = this.async();
+    var failed = 0;
 
     // Iterate over all specified file groups, async for 'streaming' output on large projects
     grunt.util.async.reduce(this.filesSrc, true, function(success, filepath, callback) {
@@ -40,6 +41,9 @@ module.exports = function(grunt) {
         if(result.failureCount > 0) {
           var outputString = "";
           var outputFile = options.outputFile;
+
+          failed += result.failureCount;
+
           if (outputFile != null) {
             outputString = grunt.file.read(outputFile);
           }
@@ -67,11 +71,14 @@ module.exports = function(grunt) {
         if (err) {
             done(err);
         } else if (!success) {
+            grunt.log.error(failed + " " + grunt.util.pluralize(failed,"error/errors") + " in " +
+                            this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files"));
             done(false);
         } else {
+            grunt.log.ok(this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files") + " lint free.");
             done();
         }
-    });
+    }.bind(this));
   });
 
 };
