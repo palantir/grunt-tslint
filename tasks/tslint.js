@@ -28,10 +28,9 @@ module.exports = function(grunt) {
     var done = this.async();
     var failed = 0;
 
-    //To create the output file if it dosn't exist
-		if (options.outputFile && !grunt.file.exists(options.outputFile)) {
-			grunt.file.write(options.outputFile);
-		}
+    if (options.outputFile && !grunt.file.exists(options.outputFile)) {
+        grunt.file.write(options.outputFile);
+    }
 
     // Iterate over all specified file groups, async for 'streaming' output on large projects
     grunt.util.async.reduce(this.filesSrc, true, function(success, filepath, callback) {
@@ -77,9 +76,7 @@ module.exports = function(grunt) {
             done(err);
         } else if (!success) {
             grunt.log.error(failed + " " + grunt.util.pluralize(failed,"error/errors") + " in " +
-                            this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files"));
-            //done(false);
-            //To allow build to continue
+            this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files"));
             done();
         } else {
             grunt.log.ok(this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files") + " lint free.");
