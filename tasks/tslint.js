@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     var options = this.options({
       formatter: "prose",
       outputFile: null,
-      appendToOutputFile: false
+      appendToOutput: false
     });
     var done = this.async();
     var failed = 0;
@@ -42,14 +42,14 @@ module.exports = function(grunt) {
         if(result.failureCount > 0) {
           var outputString = "";
           var outputFile = options.outputFile;
-          var appendToOutputFile = options.appendToOutputFile;
+          var appendToOutput = options.appendToOutput;
 
           failed += result.failureCount;
 
           if (outputFile != null && grunt.file.exists(outputFile)) {
-            if(appendToOutputFile){
+            if (appendToOutput) {
               outputString = grunt.file.read(outputFile);
-            }else{
+            } else {
               grunt.file.delete(outputFile);
             }
           }
