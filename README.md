@@ -39,7 +39,8 @@ A JSON configuration object passed into tslint.
 	grunt.initConfig({
 	  tslint: {
 	    options: {
-	      configuration: grunt.file.readJSON("tslint.json")
+	      configuration: grunt.file.readJSON("tslint.json"),
+		  force:true //set force to true to report tslint errors but not fail the task
 	    },
 	    files: {
 	      src: ['src/file1.ts', 'src/file2.ts']

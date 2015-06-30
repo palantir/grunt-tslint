@@ -21,10 +21,14 @@ module.exports = function(grunt) {
   var Linter = require("tslint");
 
   grunt.registerMultiTask("tslint", "A linter for TypeScript.", function() {
+	  
     var options = this.options({
       formatter: "prose",
-      outputFile: null
+      outputFile: null,
+	  force: false
     });
+	  
+	var force = options.force;
     var done = this.async();
     var failed = 0;
 
@@ -73,7 +77,7 @@ module.exports = function(grunt) {
         } else if (!success) {
             grunt.log.error(failed + " " + grunt.util.pluralize(failed,"error/errors") + " in " +
                             this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files"));
-            done(false);
+            done(force);
         } else {
             grunt.log.ok(this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files") + " lint free.");
             done();
