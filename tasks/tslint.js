@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 
 "use strict";
 
@@ -23,7 +23,8 @@ module.exports = function(grunt) {
   grunt.registerMultiTask("tslint", "A linter for TypeScript.", function() {
     var options = this.options({
       formatter: "prose",
-      outputFile: null
+      outputFile: null,
+      appendToOutput: false
     });
     var done = this.async();
     var failed = 0;
@@ -41,11 +42,16 @@ module.exports = function(grunt) {
         if(result.failureCount > 0) {
           var outputString = "";
           var outputFile = options.outputFile;
+          var appendToOutput = options.appendToOutput;
 
           failed += result.failureCount;
 
-          if (outputFile != null) {
-            outputString = grunt.file.read(outputFile);
+          if (outputFile != null && grunt.file.exists(outputFile)) {
+            if (appendToOutput) {
+              outputString = grunt.file.read(outputFile);
+            } else {
+              grunt.file.delete(outputFile);
+            }
           }
           result.output.split("\n").forEach(function(line) {
             if(line !== "") {
