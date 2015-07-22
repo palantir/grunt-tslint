@@ -12,13 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 
 "use strict";
 
 module.exports = function(grunt) {
 
-  // Project configuration.
+  grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-contrib-clean");
+
   grunt.initConfig({
     jshint: {
       all: [
@@ -30,7 +32,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // Configuration to be run (and then tested).
     tslint: {
       errors: {
         options: {
@@ -44,19 +45,14 @@ module.exports = function(grunt) {
         ]}
       }
     }
-
   });
 
-  // Actually load this plugin's task(s).
+  // actually load this plugin's task(s)
   grunt.loadTasks("tasks");
-
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-clean");
 
   grunt.registerTask("test", ["tslint"]);
 
-  // By default, lint and run all tests.
+  // by default, lint and run all tests
   grunt.registerTask("default", ["jshint", "test"]);
 
 };
