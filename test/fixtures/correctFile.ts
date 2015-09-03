@@ -1,8 +1,8 @@
 module XYZ {
     interface I {
-        x: number,
-        y,
-        z
+        x: number;
+        y;
+        z;
     }
 
     var zZz = {
