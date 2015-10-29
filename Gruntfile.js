@@ -16,9 +16,10 @@
 
 "use strict";
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-clean");
+    grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.initConfig({
         jshint: {
@@ -45,8 +46,27 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    quiet: false,
+                    log: true
+                },
+                src: ["test/tasks/**/*.js"]
+            }
         }
     });
+
+    // actually load this plugin's task(s)
+    grunt.loadTasks("tasks");
+
+    grunt.registerTask("test", ["tslint", "mochaTest"]);
+
+    // by default, lint and run all tests
+    grunt.registerTask("default", ["jshint", "test"]);
 
     // actually load this plugin's task(s)
     grunt.loadTasks("tasks");
