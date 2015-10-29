@@ -1,5 +1,8 @@
 var expect = require('chai').expect;
 var path = require('path');
+var fs = require('fs');
+var mkdirp = require('mkdirp');
+var rimraf = require('rimraf');
 var ChildProcess = require('cover-child-process').ChildProcess;
 var Blanket = require('cover-child-process').Blanket;
 var childProcess = new ChildProcess(new Blanket());
@@ -31,5 +34,62 @@ describe('grunt-tslint on a single file', function() {
 			expect(stdout).to.match(/1 file lint free/);
 			done();
 		});
+	});
+});
+
+describe('grunt-tslint on multiple files', function() {
+
+	var scenario = 'multi-error-files',
+		tmpDir = fixture('tmp', scenario),
+		tmpOutput;
+
+	beforeEach(function(next) {
+		mkdirp(tmpDir, next);
+	});
+
+	afterEach(function(next) {
+		rimraf(tmpDir, next);
+	});
+
+	it('should find errors in multiple invalid .ts files', function(done) {
+
+		execGrunt([
+			'--gruntfile ', fixture('Gruntfile.js', scenario),
+			'tslint:stdout'
+		].join(' '), function(error, stdout, stderr) {
+			
+			expect(stdout).to.contain('Task "tslint:stdout" failed');
+			
+			tmpOutput = stdout.split('\n')
+			.filter(function(line) {
+				var isOutputLine = (line.indexOf('>> ') === 0);
+				var isSummaryLine = /[0-9]+ error(s?) in [0-9]+ file(s?)/.test(line);
+				return isOutputLine && !isSummaryLine;
+			})
+			.map(function(line) {
+				return line.substr(3);
+			})
+			.join('\n');
+
+			done();
+		});
+
+	});
+
+	it('should write output of multiple invalid .ts files into a single outputFile', function(done) {
+
+		expect(tmpOutput).to.not.be.empty;
+
+		execGrunt([
+			'--gruntfile ', fixture('Gruntfile.js', scenario),
+			'tslint:file'
+		].join(' '), function(error, stdout, stderr) {
+			expect(
+				fs.readFileSync(path.join(tmpDir, 'outputFile')).toString().trim()
+			).to.be.equal(tmpOutput);
+
+			done();
+		});
+
 	});
 });
