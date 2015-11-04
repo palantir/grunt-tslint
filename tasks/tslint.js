@@ -26,9 +26,11 @@ module.exports = function(grunt) {
       outputFile: null,
       appendToOutput: false
     });
+    if (typeof options.configuration === "string") {
+        options.configuration = grunt.file.readJSON( options.configuration );
+    }
     var done = this.async();
     var failed = 0;
-
     // Iterate over all specified file groups, async for 'streaming' output on large projects
     grunt.util.async.reduce(this.filesSrc, true, function(success, filepath, callback) {
       if (!grunt.file.exists(filepath)) {
