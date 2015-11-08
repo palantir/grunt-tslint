@@ -29,10 +29,11 @@ module.exports = function (grunt) {
         });
 
         var specifiedConfiguration = options.configuration;
-        var force = options.force;
-
         var done = this.async();
         var failed = 0;
+        var results = [];
+
+        var force = options.force;
         var outputFile = options.outputFile;
         var appendToOutput = options.appendToOutput;
 
@@ -65,6 +66,7 @@ module.exports = function (grunt) {
                     }
                     result.output.split("\n").forEach(function (line) {
                         if (line !== "") {
+                            results = results.concat((options.formatter.toLowerCase() === 'json') ? JSON.parse(line) : line);
                             if (outputFile != null) {
                                 outputString += line + "\n";
                             } else {
@@ -74,6 +76,7 @@ module.exports = function (grunt) {
                     });
                     if (outputFile != null) {
                         grunt.file.write(outputFile, outputString);
+                        appendToOutput = true;
                     }
                     success = false;
                 }
@@ -98,5 +101,6 @@ module.exports = function (grunt) {
                 done(force);
             }
         }.bind(this));
+
     });
 };

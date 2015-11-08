@@ -36,7 +36,7 @@ module.exports = function(grunt) {
             errors: {
                 options: {
                     configuration: "tslint.json",
-                    force: false
+                    force: true
                 },
                 files: {
                     src: [
@@ -63,16 +63,10 @@ module.exports = function(grunt) {
     // actually load this plugin's task(s)
     grunt.loadTasks("tasks");
 
-    grunt.registerTask("test", ["tslint", "mochaTest"]);
-
     // by default, lint and run all tests
     grunt.registerTask("default", ["jshint", "test"]);
 
-    // actually load this plugin's task(s)
-    grunt.loadTasks("tasks");
+    // run unit tests
+    grunt.registerTask("test", ["mochaTest"]);
 
-    grunt.registerTask("test", ["tslint"]);
-
-    // by default, lint and run all tests
-    grunt.registerTask("default", ["jshint", "test"]);
 };
