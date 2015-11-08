@@ -24,6 +24,7 @@ module.exports = function (grunt) {
             configuration: null,
             formatter: "prose",
             outputFile: null,
+            outputReport: null,
             appendToOutput: false,
             force: false
         });
@@ -93,14 +94,26 @@ module.exports = function (grunt) {
             } else if (success) {
                 var okMessage = this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files") + " lint free.";
                 grunt.log.ok(okMessage);
+                report();
                 done();
             } else {
                 var errorMessage = failed + " " + grunt.util.pluralize(failed, "error/errors") + " in " +
                     this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
                 grunt.log.error(errorMessage);
+                report();
                 done(force);
             }
         }.bind(this));
 
     });
+
+    function report() {
+      if(options.outputReport) {
+        grunt.config(options.outputReport.split('.'), {
+          failed: failed,
+          files: files,
+          results: results
+        });
+      }
+    }
 };
