@@ -30,7 +30,8 @@
     "grunt": "~0.4.5",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-jshint": "~0.11.0",
-    "tslint": "latest"
+    "tslint": "latest",
+    "typescript": "latest"
   },
   "peerDependencies": {
     "grunt": "~0.4.5",
