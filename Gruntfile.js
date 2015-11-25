@@ -16,43 +16,42 @@
 
 "use strict";
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-contrib-clean");
 
-  grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-clean");
-
-  grunt.initConfig({
-    jshint: {
-      all: [
-        "Gruntfile.js",
-        "tasks/*.js"
-      ],
-      options: {
-        jshintrc: ".jshintrc"
-      }
-    },
-
-    tslint: {
-      errors: {
-        options: {
-          configuration: "tslint.json"
+    grunt.initConfig({
+        jshint: {
+            all: [
+                "Gruntfile.js",
+                "tasks/*.js"
+            ],
+            options: {
+                jshintrc: ".jshintrc"
+            }
         },
-        files: {
-          src: [
-            "test/fixtures/correctFile.ts",
-            "test/fixtures/errorFile1.ts",
-            "test/fixtures/errorFile2.ts"
-        ]}
-      }
-    }
-  });
 
-  // actually load this plugin's task(s)
-  grunt.loadTasks("tasks");
+        tslint: {
+            errors: {
+                options: {
+                    configuration: "tslint.json"
+                },
+                files: {
+                    src: [
+                        "test/fixtures/correctFile.ts",
+                        "test/fixtures/errorFile1.ts",
+                        "test/fixtures/errorFile2.ts"
+                    ]
+                }
+            }
+        }
+    });
 
-  grunt.registerTask("test", ["tslint"]);
+    // actually load this plugin's task(s)
+    grunt.loadTasks("tasks");
 
-  // by default, lint and run all tests
-  grunt.registerTask("default", ["jshint", "test"]);
+    grunt.registerTask("test", ["tslint"]);
 
+    // by default, lint and run all tests
+    grunt.registerTask("default", ["jshint", "test"]);
 };

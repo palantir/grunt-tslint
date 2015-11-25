@@ -16,77 +16,80 @@
 
 "use strict";
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+    var Linter = require("tslint");
 
-  var Linter = require("tslint");
+    grunt.registerMultiTask("tslint", "A linter for TypeScript.", function () {
+        var options = this.options({
+            formatter: "prose",
+            outputFile: null,
+            appendToOutput: false
+        });
 
-  grunt.registerMultiTask("tslint", "A linter for TypeScript.", function() {
-    var options = this.options({
-      formatter: "prose",
-      outputFile: null,
-      appendToOutput: false
-    });
-    if (typeof options.configuration === "string") {
-        options.configuration = grunt.file.readJSON( options.configuration );
-    }
-    var done = this.async();
-    var failed = 0;
-    // Iterate over all specified file groups, async for 'streaming' output on large projects
-    grunt.util.async.reduce(this.filesSrc, true, function(success, filepath, callback) {
-      if (!grunt.file.exists(filepath)) {
-        grunt.log.warn('Source file "' + filepath + '" not found.');
-      } else {
-        var contents = grunt.file.read(filepath);
-        var linter = new Linter(filepath, contents, options);
+        if (typeof options.configuration === "string") {
+            options.configuration = grunt.file.readJSON(options.configuration);
+        }
 
-        var result = linter.lint();
+        var done = this.async();
+        var failed = 0;
 
-        if(result.failureCount > 0) {
-          var outputString = "";
-          var outputFile = options.outputFile;
-          var appendToOutput = options.appendToOutput;
-
-          failed += result.failureCount;
-
-          if (outputFile != null && grunt.file.exists(outputFile)) {
-            if (appendToOutput) {
-              outputString = grunt.file.read(outputFile);
+        // Iterate over all specified file groups, async for 'streaming' output on large projects
+        grunt.util.async.reduce(this.filesSrc, true, function (success, filepath, callback) {
+            if (!grunt.file.exists(filepath)) {
+                grunt.log.warn('Source file "' + filepath + '" not found.');
             } else {
-              grunt.file.delete(outputFile);
-            }
-          }
-          result.output.split("\n").forEach(function(line) {
-            if(line !== "") {
-              if (outputFile != null) {
-                outputString += line + "\n";
-              } else {
-                grunt.log.error(line);
-              }
-            }
-          });
-          if(outputFile != null) {
-            grunt.file.write(outputFile, outputString);
-          }
-          success = false;
-        }
-      }
-      // Using setTimout as process.nextTick() doesn't flush
-      setTimeout(function() {
-        callback(null, success);
-      }, 1);
+                var contents = grunt.file.read(filepath);
+                var linter = new Linter(filepath, contents, options);
+                var result = linter.lint();
 
-    }, function(err, success) {
-        if (err) {
-            done(err);
-        } else if (!success) {
-            grunt.log.error(failed + " " + grunt.util.pluralize(failed,"error/errors") + " in " +
-                            this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files"));
-            done(false);
-        } else {
-            grunt.log.ok(this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length,"file/files") + " lint free.");
-            done();
-        }
-    }.bind(this));
-  });
+                if (result.failureCount > 0) {
+                    var outputString = "";
+                    var outputFile = options.outputFile;
+                    var appendToOutput = options.appendToOutput;
 
+                    failed += result.failureCount;
+
+                    if (outputFile != null && grunt.file.exists(outputFile)) {
+                        if (appendToOutput) {
+                            outputString = grunt.file.read(outputFile);
+                        } else {
+                            grunt.file.delete(outputFile);
+                        }
+                    }
+                    result.output.split("\n").forEach(function (line) {
+                        if (line !== "") {
+                            if (outputFile != null) {
+                                outputString += line + "\n";
+                            } else {
+                                grunt.log.error(line);
+                            }
+                        }
+                    });
+                    if (outputFile != null) {
+                        grunt.file.write(outputFile, outputString);
+                    }
+                    success = false;
+                }
+            }
+
+            // Using setTimout as process.nextTick() doesn't flush
+            setTimeout(function () {
+                callback(null, success);
+            }, 1);
+
+        }, function (err, success) {
+            if (err) {
+                done(err);
+            } else if (success) {
+                var okMessage = this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files") + " lint free.";
+                grunt.log.ok(okMessage);
+                done();
+            } else {
+                var errorMessage = failed + " " + grunt.util.pluralize(failed, "error/errors") + " in " +
+                    this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
+                grunt.log.error(errorMessage);
+                done(false);
+            }
+        }.bind(this));
+    });
 };
