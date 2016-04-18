@@ -21,14 +21,13 @@ module.exports = function (grunt) {
 
     grunt.registerMultiTask("tslint", "A linter for TypeScript.", function () {
         var options = this.options({
+            configuration: null,
             formatter: "prose",
             outputFile: null,
             appendToOutput: false
         });
 
-        if (typeof options.configuration === "string") {
-            options.configuration = grunt.file.readJSON(options.configuration);
-        }
+        var specifiedConfiguration = options.configuration;
 
         var done = this.async();
         var failed = 0;
@@ -38,6 +37,12 @@ module.exports = function (grunt) {
             if (!grunt.file.exists(filepath)) {
                 grunt.log.warn('Source file "' + filepath + '" not found.');
             } else {
+                var configuration = specifiedConfiguration;
+                if (configuration == null || typeof configuration === "string") {
+                    configuration = Linter.findConfiguration(configuration, filepath);
+                }
+                options.configuration = configuration;
+
                 var contents = grunt.file.read(filepath);
                 var linter = new Linter(filepath, contents, options);
                 var result = linter.lint();
