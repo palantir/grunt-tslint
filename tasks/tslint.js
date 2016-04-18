@@ -39,7 +39,7 @@ module.exports = function (grunt) {
             } else {
                 var configuration = specifiedConfiguration;
                 if (configuration == null || typeof configuration === "string") {
-                    configuration = Linter.findConfiguration(null, filepath);
+                    configuration = Linter.findConfiguration(configuration, filepath);
                 }
                 options.configuration = configuration;
 
