@@ -18,6 +18,7 @@
 
 module.exports = function (grunt) {
     var Linter = require("tslint");
+    var path = require("path");
 
     grunt.registerMultiTask("tslint", "A linter for TypeScript.", function () {
         var options = this.options({
@@ -26,7 +27,9 @@ module.exports = function (grunt) {
             appendToOutput: false
         });
 
+        var configurationPathStr;
         if (typeof options.configuration === "string") {
+            configurationPathStr = options.configuration;
             options.configuration = grunt.file.readJSON(options.configuration);
         }
 
@@ -38,6 +41,13 @@ module.exports = function (grunt) {
             if (!grunt.file.exists(filepath)) {
                 grunt.log.warn('Source file "' + filepath + '" not found.');
             } else {
+                if (options.configuration.rulesDirectory) {
+                    // if configurationPath is null, this will be set to ".", which is the current directory and is fine
+                    var configurationPath = Linter.findConfigurationPath(configurationPathStr, filepath);
+                    var configurationDir = path.dirname(configurationPath);
+                    options.rulesDirectory = Linter.getRulesDirectories(options.configuration.rulesDirectory, configurationDir);
+                }
+
                 var contents = grunt.file.read(filepath);
                 var linter = new Linter(filepath, contents, options);
                 var result = linter.lint();
