@@ -24,15 +24,13 @@ module.exports = function (grunt) {
             configuration: null,
             formatter: "prose",
             outputFile: null,
-            appendToOutput: false,
-            force: false
+            appendToOutput: false
         });
 
         var specifiedConfiguration = options.configuration;
 
         var done = this.async();
         var failed = 0;
-        var force = options.force;
 
         // Iterate over all specified file groups, async for 'streaming' output on large projects
         grunt.util.async.reduce(this.filesSrc, true, function (success, filepath, callback) {
@@ -95,7 +93,7 @@ module.exports = function (grunt) {
                 var errorMessage = failed + " " + grunt.util.pluralize(failed, "error/errors") + " in " +
                     this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
                 grunt.log.error(errorMessage);
-                done(force);
+                done(false);
             }
         }.bind(this));
     });
