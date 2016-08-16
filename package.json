@@ -1,7 +1,7 @@
 {
   "name": "grunt-tslint",
   "description": "Grunt plugin for TypeScript Linter",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "homepage": "https://github.com/palantir/grunt-tslint",
   "author": {
     "name": "Palantir Technologies, Inc."
