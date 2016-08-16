@@ -37,11 +37,8 @@ grunt.initConfig({
 
 ### Options
 
-#### options.configuration
-
-Type: `Object`
-
-A JSON configuration object passed into tslint.
+* `options.configuration: Object | string` - A TSLint configuration; can either be a JSON configuration object or a path to a tslint.json config file.
+* `options.force: boolean` - If `true`, the task will suceed even if lint failures are found. Defaults to `false`.
 
 ### Usage Example
 
