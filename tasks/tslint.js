@@ -24,10 +24,12 @@ module.exports = function (grunt) {
             configuration: null,
             formatter: "prose",
             outputFile: null,
-            appendToOutput: false
+            appendToOutput: false,
+            force: false
         });
 
         var specifiedConfiguration = options.configuration;
+        var force = options.force;
 
         var done = this.async();
         var failed = 0;
@@ -93,7 +95,7 @@ module.exports = function (grunt) {
                 var errorMessage = failed + " " + grunt.util.pluralize(failed, "error/errors") + " in " +
                     this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
                 grunt.log.error(errorMessage);
-                done(false);
+                done(force);
             }
         }.bind(this));
     });
