@@ -34,6 +34,20 @@ module.exports = function (grunt) {
         var done = this.async();
         var failed = 0;
 
+        var outputFile = options.outputFile;
+
+        if (outputFile != null && grunt.file.exists(outputFile)) {
+            if (options.appendToOutput) {
+                outputString = grunt.file.read(outputFile);
+            } else {
+                grunt.file.delete(outputFile);
+            }
+        }
+
+        let header = "";
+        let footer = "";
+        let outputString = "";
+
         // Iterate over all specified file groups, async for 'streaming' output on large projects
         grunt.util.async.reduce(this.filesSrc, true, function (success, filepath, callback) {
             if (!grunt.file.exists(filepath)) {
@@ -50,19 +64,11 @@ module.exports = function (grunt) {
                 var result = linter.lint();
 
                 if (result.failureCount > 0) {
-                    var outputString = "";
-                    var outputFile = options.outputFile;
-                    var appendToOutput = options.appendToOutput;
+                    header = result.header;
+                    footer = result.footer;
 
                     failed += result.failureCount;
 
-                    if (outputFile != null && grunt.file.exists(outputFile)) {
-                        if (appendToOutput) {
-                            outputString = grunt.file.read(outputFile);
-                        } else {
-                            grunt.file.delete(outputFile);
-                        }
-                    }
                     result.output.split("\n").forEach(function (line) {
                         if (line !== "") {
                             if (outputFile != null) {
@@ -72,9 +78,7 @@ module.exports = function (grunt) {
                             }
                         }
                     });
-                    if (outputFile != null) {
-                        grunt.file.write(outputFile, outputString);
-                    }
+
                     success = false;
                 }
             }
@@ -85,6 +89,10 @@ module.exports = function (grunt) {
             }, 1);
 
         }, function (err, success) {
+            if (outputFile != null) {
+                grunt.file.write(outputFile, header + outputString + footer);
+            }
+
             if (err) {
                 done(err);
             } else if (success) {
