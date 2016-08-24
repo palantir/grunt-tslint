@@ -29,10 +29,13 @@ module.exports = function (grunt) {
         });
 
         var specifiedConfiguration = options.configuration;
-        var force = options.force;
-
         var done = this.async();
         var failed = 0;
+        var results = [];
+
+        var force = options.force;
+        var outputFile = options.outputFile;
+        var appendToOutput = options.appendToOutput;
 
         // Iterate over all specified file groups, async for 'streaming' output on large projects
         grunt.util.async.reduce(this.filesSrc, true, function (success, filepath, callback) {
@@ -51,8 +54,6 @@ module.exports = function (grunt) {
 
                 if (result.failureCount > 0) {
                     var outputString = "";
-                    var outputFile = options.outputFile;
-                    var appendToOutput = options.appendToOutput;
 
                     failed += result.failureCount;
 
@@ -65,6 +66,7 @@ module.exports = function (grunt) {
                     }
                     result.output.split("\n").forEach(function (line) {
                         if (line !== "") {
+                            results = results.concat((options.formatter.toLowerCase() === 'json') ? JSON.parse(line) : line);
                             if (outputFile != null) {
                                 outputString += line + "\n";
                             } else {
@@ -74,6 +76,7 @@ module.exports = function (grunt) {
                     });
                     if (outputFile != null) {
                         grunt.file.write(outputFile, outputString);
+                        appendToOutput = true;
                     }
                     success = false;
                 }
@@ -98,5 +101,6 @@ module.exports = function (grunt) {
                 done(force);
             }
         }.bind(this));
+
     });
 };

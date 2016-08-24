@@ -31,7 +31,14 @@
     "grunt-contrib-clean": "~1.0.0",
     "grunt-contrib-jshint": "~1.0.0",
     "tslint": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "chai": "^3.4.0",
+    "cover-child-process": "^0.1.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.3.3",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.4.3"
   },
   "peerDependencies": {
     "grunt": ">=0.4.5",
