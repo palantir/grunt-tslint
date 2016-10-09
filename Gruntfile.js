@@ -17,56 +17,52 @@
 "use strict";
 
 module.exports = function(grunt) {
-    grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-clean");
-    grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks("grunt-eslint");
+    grunt.loadNpmTasks("grunt-mocha-test");
 
     grunt.initConfig({
-        jshint: {
-            all: [
+        eslint: {
+            target: [
                 "Gruntfile.js",
-                "tasks/*.js"
+                "tasks/*.js",
             ],
-            options: {
-                jshintrc: ".jshintrc"
-            }
         },
 
         tslint: {
             errors: {
                 options: {
                     configuration: "tslint.json",
-                    force: true
+                    force: true,
                 },
                 files: {
                     src: [
                         "test/fixtures/correctFile.ts",
                         "test/fixtures/errorFile1.ts",
-                        "test/fixtures/errorFile2.ts"
-                    ]
-                }
-            }
+                        "test/fixtures/errorFile2.ts",
+                    ],
+                },
+            },
         },
 
         mochaTest: {
             test: {
                 options: {
-                    reporter: 'spec',
+                    reporter: "spec",
                     quiet: false,
-                    log: true
+                    log: true,
                 },
-                src: ["test/tasks/**/*.js"]
-            }
-        }
+                src: ["test/tasks/**/*.js"],
+            },
+        },
     });
 
     // actually load this plugin's task(s)
     grunt.loadTasks("tasks");
 
     // by default, lint and run all tests
-    grunt.registerTask("default", ["jshint", "test"]);
+    grunt.registerTask("default", ["eslint", "test"]);
 
     // run unit tests
     grunt.registerTask("test", ["mochaTest"]);
-
 };

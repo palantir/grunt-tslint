@@ -1,5 +1,5 @@
 {
-	"rules": {
-		"semicolon": true
-	}
+  "rules": {
+    "semicolon": true
+  }
 }

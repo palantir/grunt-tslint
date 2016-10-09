@@ -16,6 +16,7 @@
 
 "use strict";
 
+/* eslint-disable no-invalid-this, no-use-before-define */
 module.exports = function (grunt) {
     var Linter = require("tslint");
 
@@ -26,7 +27,7 @@ module.exports = function (grunt) {
             outputFile: null,
             outputReport: null,
             appendToOutput: false,
-            force: false
+            force: false,
         });
 
         var specifiedConfiguration = options.configuration;
@@ -67,7 +68,9 @@ module.exports = function (grunt) {
                     }
                     result.output.split("\n").forEach(function (line) {
                         if (line !== "") {
-                            results = results.concat((options.formatter.toLowerCase() === 'json') ? JSON.parse(line) : line);
+                            results = results.concat(
+                                (options.formatter.toLowerCase() === "json") ? JSON.parse(line) : line
+                            );
                             if (outputFile != null) {
                                 outputString += line + "\n";
                             } else {
@@ -87,12 +90,12 @@ module.exports = function (grunt) {
             setTimeout(function () {
                 callback(null, success);
             }, 1);
-
         }, function (err, success) {
             if (err) {
                 done(err);
             } else if (success) {
-                var okMessage = this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files") + " lint free.";
+                var okMessage = this.filesSrc.length + " " +
+                    grunt.util.pluralize(this.filesSrc.length, "file/files") + " lint free.";
                 grunt.log.ok(okMessage);
                 report();
                 done();
@@ -105,15 +108,14 @@ module.exports = function (grunt) {
             }
         }.bind(this));
 
+        function report() {
+            if (options.outputReport) {
+                grunt.config(options.outputReport.split("."), {
+                    failed: failed,
+                    files: this.filesSrc,
+                    results: results,
+                });
+            }
+        }
     });
-
-    function report() {
-      if(options.outputReport) {
-        grunt.config(options.outputReport.split('.'), {
-          failed: failed,
-          files: files,
-          results: results
-        });
-      }
-    }
 };
