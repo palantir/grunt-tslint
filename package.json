@@ -21,24 +21,25 @@
   ],
   "main": "Gruntfile.js",
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">=4.2.0"
   },
   "scripts": {
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt": "~1.0.1",
-    "grunt-contrib-clean": "~1.0.0",
-    "grunt-contrib-jshint": "~1.0.0",
-    "tslint": "latest",
-    "typescript": "latest",
     "chai": "^3.4.0",
     "cover-child-process": "^0.1.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.3.3",
+    "eslint-config-palantir": "^1.0.0",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-eslint": "^18.1.0",
+    "grunt-mocha-test": "^0.13.2",
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.4.3"
+    "mocha": "^3.1.0",
+    "rimraf": "^2.4.3",
+    "tslint": "latest",
+    "typescript": "latest"
   },
   "peerDependencies": {
     "grunt": ">=0.4.5",
