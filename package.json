@@ -44,7 +44,7 @@
   },
   "peerDependencies": {
     "grunt": ">=0.4.5",
-    "tslint": ">=4.0.0-dev"
+    "tslint": ">=4.0.0"
   },
   "keywords": [
     "gruntplugin",
