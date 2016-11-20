@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-This plugin requires [Grunt](http://gruntjs.com/) `~0.4.1`
+This plugin requires [Grunt](http://gruntjs.com/) `~0.4.1` and [tslint](https://github.com/palantir/tslint) `~4.0.0`
 
 ```
 npm install grunt-tslint --save-dev
@@ -39,6 +39,7 @@ grunt.initConfig({
 
 * `options.configuration: Object | string` - A TSLint configuration; can either be a JSON configuration object or a path to a tslint.json config file.
 * `options.force: boolean` - If `true`, the task will suceed even if lint failures are found. Defaults to `false`.
+* `options.fix: boolean` - If `true`, fixes linting errors for select rules. This may overwrite linted files. Defaults to `false`.
 
 ### Usage Example
 
@@ -50,7 +51,8 @@ grunt.initConfig({
             configuration: "tslint.json",
             // If set to true, tslint errors will be reported, but not fail the task
             // If set to false, tslint errors will be reported, and the task will fail
-            force: false
+            force: false,
+            fix: false
         },
         files: {
             src: [
