@@ -47,7 +47,7 @@ module.exports = function (grunt) {
             } else {
                 var configuration = specifiedConfiguration;
                 if (configuration == null || typeof configuration === "string") {
-                    configuration = Linter.findConfiguration(configuration, filepath);
+                    configuration = Linter.Configuration.findConfiguration(configuration, filepath).results;
                 }
                 options.configuration = configuration;
 
@@ -56,8 +56,9 @@ module.exports = function (grunt) {
                     formatter: options.formatter
                 }
 
-                var linter = new Linter.Linter(lintOptions, Linter.Linter.createProgram(configuration.path));
-                linter.lint(filepath);
+                var linter = new Linter.Linter(lintOptions);
+                var contents = grunt.file.read(filepath);
+                linter.lint(filepath, contents, configuration);
                 var result = linter.getResult();
 
                 if (result.failureCount > 0) {
