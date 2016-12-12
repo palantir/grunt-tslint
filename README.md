@@ -1,4 +1,4 @@
-# grunt-tslint [![NPM version](https://badge.fury.io/js/grunt-tslint.png)](http://badge.fury.io/js/grunt-tslint)
+# grunt-tslint [![NPM version](https://badge.fury.io/js/grunt-tslint.svg)](https://www.npmjs.com/package/grunt-tslint) [![Downloads](http://img.shields.io/npm/dm/grunt-tslint.svg)](https://npmjs.org/package/grunt-tslint)
 
 > A grunt plugin for [tslint](https://github.com/palantir/tslint).
 
