@@ -1,7 +1,7 @@
 {
   "name": "grunt-tslint",
-  "description": "Grunt plugin for TypeScript Linter",
-  "version": "3.3.0",
+  "description": "Grunt plugin for TypeScript Linter.",
+  "version": "4.0.0",
   "homepage": "https://github.com/palantir/grunt-tslint",
   "author": {
     "name": "Palantir Technologies, Inc."
@@ -27,23 +27,24 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "chai": "^3.4.0",
-    "cover-child-process": "^0.1.5",
+    "chai": "^3.5.0",
+    "cover-child-process": "^0.1.7",
     "eslint-config-palantir": "^1.0.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
     "grunt-eslint": "^18.1.0",
     "grunt-mocha-test": "^0.13.2",
     "mkdirp": "^0.5.1",
-    "mocha": "^3.1.0",
-    "rimraf": "^2.4.3",
+    "mocha": "^3.1.2",
+    "rimraf": "^2.5.4",
     "tslint": "latest",
     "typescript": "latest"
   },
   "peerDependencies": {
     "grunt": ">=0.4.5",
-    "tslint": "^3.7.3 || 3.7.0-dev.5 || >=3.8.0-dev || >=3.9.0-dev || >=3.10.0-dev || >=3.11.0-dev || >=3.12.0-dev || >=3.13.0-dev || >=3.14.0-dev || >=3.15.0-dev || >=4.0.0-dev"
+    "tslint": ">=4.0.0"
   },
   "keywords": [
     "gruntplugin",

@@ -28,6 +28,7 @@ module.exports = function (grunt) {
             outputReport: null,
             appendToOutput: false,
             force: false,
+            fix: false
         });
 
         var specifiedConfiguration = options.configuration;
@@ -46,13 +47,19 @@ module.exports = function (grunt) {
             } else {
                 var configuration = specifiedConfiguration;
                 if (configuration == null || typeof configuration === "string") {
-                    configuration = Linter.findConfiguration(configuration, filepath);
+                    configuration = Linter.Configuration.findConfiguration(configuration, filepath).results;
                 }
                 options.configuration = configuration;
 
+                var lintOptions = {
+                    fix: options.fix,
+                    formatter: options.formatter
+                }
+
+                var linter = new Linter.Linter(lintOptions);
                 var contents = grunt.file.read(filepath);
-                var linter = new Linter(filepath, contents, options);
-                var result = linter.lint();
+                linter.lint(filepath, contents, configuration);
+                var result = linter.getResult();
 
                 if (result.failureCount > 0) {
                     var outputString = "";
