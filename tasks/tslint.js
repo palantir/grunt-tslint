@@ -80,6 +80,8 @@ module.exports = function (grunt) {
                             );
                             if (outputFile != null) {
                                 outputString += line + "\n";
+                            } else if (options.formatter.toLowerCase() === "msbuild") {
+                                grunt.log.writeln(line['red']);
                             } else {
                                 grunt.log.error(line);
                             }
