@@ -54,6 +54,8 @@ module.exports = function (grunt) {
                 var lintOptions = {
                     fix: options.fix,
                     formatter: options.formatter,
+                    formattersDirectory: options.formattersDirectory,
+                    rulesDirectory: options.rulesDirectory
                 };
 
                 var linter = new Linter.Linter(lintOptions);
