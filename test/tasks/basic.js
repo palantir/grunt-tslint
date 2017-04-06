@@ -24,7 +24,7 @@ var fixture = function(file, scenario) {
 describe('grunt-tslint on a single file', function() {
     it('should find errors in single invalid .ts file', function(done) {
         execGrunt('--gruntfile ' + fixture('Gruntfile.js', 'single-error-file'), function(error, stdout, stderr) {
-            expect(stdout).to.match(/1 error in 1 file/);
+            expect(stdout).to.match(/1 error and 0 warnings in 1 file/);
             done();
         });
     });
@@ -63,7 +63,7 @@ describe('grunt-tslint on multiple files', function() {
             tmpOutput = stdout.split('\n')
                 .filter(function(line) {
                     var isOutputLine = (line.indexOf('>> ') === 0);
-                    var isSummaryLine = /[0-9]+ error(s?) in [0-9]+ file(s?)/.test(line);
+                    var isSummaryLine = /[0-9]+ error(s?) and [0-9]+ warning(s?) in [0-9]+ file(s?)/.test(line);
                     return isOutputLine && !isSummaryLine;
                 })
                 .map(function(line) {

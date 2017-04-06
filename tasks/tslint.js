@@ -31,9 +31,10 @@ module.exports = function (grunt) {
             fix: false,
         });
 
-        var specifiedConfiguration = options.configuration;
+        var specifiedConfiguration = Linter.Configuration.parseConfigFile(options.configuration);
         var done = this.async();
-        var failed = 0;
+        var errors = 0;
+        var warnings = 0;
         var results = [];
 
         var force = options.force;
@@ -63,10 +64,11 @@ module.exports = function (grunt) {
                 linter.lint(filepath, contents, configuration);
                 var result = linter.getResult();
 
-                if (result.failureCount > 0) {
+                if (result.errorCount > 0 || result.warningCount > 0) {
                     var outputString = "";
 
-                    failed += result.failureCount;
+                    errors += result.errorCount;
+                    warnings += result.warningCount;
 
                     if (outputFile != null && grunt.file.exists(outputFile)) {
                         if (appendToOutput) {
@@ -93,25 +95,34 @@ module.exports = function (grunt) {
                         grunt.file.write(outputFile, outputString);
                         appendToOutput = true;
                     }
-                    success = false;
+                    if (result.errorCount > 0) {
+                        success = false;
+                    }
                 }
             }
 
-            // Using setTimout as process.nextTick() doesn't flush
+            // Using setTimeout as process.nextTick() doesn't flush
             setTimeout(function () {
                 callback(null, success);
             }, 1);
         }, function (err, success) {
             if (err) {
                 done(err);
-            } else if (success) {
-                var okMessage = this.filesSrc.length + " " +
-                    grunt.util.pluralize(this.filesSrc.length, "file/files") + " lint free.";
+            } else if (success && warnings === 0) {
+                var okMessage;
+                if (warnings === 0) {
+                    okMessage = this.filesSrc.length + " " +
+                        grunt.util.pluralize(this.filesSrc.length, "file/files") + " lint free.";
+                } else {
+                    okMessage = warnings + " " + grunt.util.pluralize(warnings, "warning/warnings") + " in " +
+                        this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
+                }
                 grunt.log.ok(okMessage);
                 report();
                 done();
             } else {
-                var errorMessage = failed + " " + grunt.util.pluralize(failed, "error/errors") + " in " +
+                var errorMessage = errors + " " + grunt.util.pluralize(errors, "error/errors") + " and " +
+                    warnings + " " + grunt.util.pluralize(warnings, "warning/warnings") + " in " +
                     this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
                 grunt.log.error(errorMessage);
                 report();
@@ -122,7 +133,9 @@ module.exports = function (grunt) {
         function report() {
             if (options.outputReport) {
                 grunt.config(options.outputReport.split("."), {
-                    failed: failed,
+                    failed: errors + warnings,
+                    errors: errors,
+                    warnings: warnings,
                     files: this.filesSrc,
                     results: results,
                 });
