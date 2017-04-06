@@ -31,7 +31,12 @@ module.exports = function (grunt) {
             fix: false,
         });
 
-        var specifiedConfiguration = Linter.Configuration.parseConfigFile(options.configuration);
+        var specifiedConfiguration;
+        if (options.configuration.rules != null && options.configuration.rules instanceof Map) {
+            specifiedConfiguration = options.configuration;
+        } else {
+            specifiedConfiguration = Linter.Configuration.parseConfigFile(options.configuration);
+        }
         var done = this.async();
         var errors = 0;
         var warnings = 0;
