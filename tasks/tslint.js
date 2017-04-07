@@ -111,7 +111,7 @@ module.exports = function (grunt) {
         }, function (err, success) {
             if (err) {
                 done(err);
-            } else if (success && warnings === 0) {
+            } else if (success) {
                 var okMessage;
                 if (warnings === 0) {
                     okMessage = this.filesSrc.length + " " +
