@@ -13,7 +13,8 @@ module.exports = function(grunt) {
         tslint: {
             default: {
                 options: {
-                    configuration: grunt.file.readJSON("tslint.json")
+                    // load using file name
+                    configuration: "tslint.json"
                 },
                 files: {
                     src: ["errorFile.ts"]
