@@ -40,6 +40,7 @@ grunt.initConfig({
 * `options.configuration: Object | string` - A TSLint configuration; can either be a JSON configuration object or a path to a tslint.json config file.
 * `options.force: boolean` - If `true`, the task will suceed even if lint failures are found. Defaults to `false`.
 * `options.fix: boolean` - If `true`, fixes linting errors for select rules. This may overwrite linted files. Defaults to `false`.
+* `options.typeCheck: boolean` - If `true`, enables [type checking](http://palantir.github.io/tslint/usage/type-checking/) while linting. Defaults to `false`.
 
 ### Usage Example
 
