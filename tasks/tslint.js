@@ -121,25 +121,25 @@ module.exports = function (grunt) {
                         this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
                 }
                 grunt.log.ok(okMessage);
-                report();
+                report(this.filesSrc);
                 done();
             } else {
                 var errorMessage = errors + " " + grunt.util.pluralize(errors, "error/errors") + " and " +
                     warnings + " " + grunt.util.pluralize(warnings, "warning/warnings") + " in " +
                     this.filesSrc.length + " " + grunt.util.pluralize(this.filesSrc.length, "file/files");
                 grunt.log.error(errorMessage);
-                report();
+                report(this.filesSrc);
                 done(force);
             }
         }.bind(this));
 
-        function report() {
+        function report(filesSrc) {
             if (options.outputReport) {
                 grunt.config(options.outputReport.split("."), {
                     failed: errors + warnings,
                     errors: errors,
                     warnings: warnings,
-                    files: this.filesSrc,
+                    files: filesSrc,
                     results: results,
                 });
             }
