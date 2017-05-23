@@ -49,7 +49,7 @@ module.exports = function (grunt) {
                 var configuration = specifiedConfiguration;
                 if (configuration == null || typeof configuration === "string") {
                     configuration = Linter.Configuration.findConfiguration(configuration, filepath).results;
-                } else if (!(configuration.rules instanceof Map)) {
+                } else if (!(configuration.rules instanceof Map)) {   // eslint-disable-line no-undef
                     configuration = Linter.Configuration.parseConfigFile(configuration);
                 }
 
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                     fix: options.fix,
                     formatter: options.formatter,
                     formattersDirectory: options.formattersDirectory,
-                    rulesDirectory: options.rulesDirectory
+                    rulesDirectory: options.rulesDirectory,
                 };
 
                 var linter = new Linter.Linter(lintOptions);
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
                             if (outputFile != null) {
                                 outputString += line + "\n";
                             } else if (options.formatter.toLowerCase() === "msbuild") {
-                                grunt.log.writeln(line['red']);
+                                grunt.log.writeln(line.red);
                             } else {
                                 grunt.log.error(line);
                             }
