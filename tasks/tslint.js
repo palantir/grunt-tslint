@@ -19,6 +19,7 @@
 /* eslint-disable no-invalid-this, no-use-before-define */
 module.exports = function (grunt) {
     var Linter = require("tslint");
+    var ts = require("typescript");
 
     grunt.registerMultiTask("tslint", "A linter for TypeScript.", function () {
         var options = this.options({
@@ -29,6 +30,7 @@ module.exports = function (grunt) {
             appendToOutput: false,
             force: false,
             fix: false,
+            typeCheck: false,
         });
 
         var specifiedConfiguration = options.configuration;
@@ -62,7 +64,9 @@ module.exports = function (grunt) {
                     rulesDirectory: options.rulesDirectory,
                 };
 
-                var linter = new Linter.Linter(lintOptions);
+                // eslint-disable-next-line new-cap
+                var program = options.typeCheck ? new ts.createProgram([filepath], {}) : undefined;
+                var linter = new Linter.Linter(lintOptions, program);
                 var contents = grunt.file.read(filepath);
                 linter.lint(filepath, contents, configuration);
                 var result = linter.getResult();
