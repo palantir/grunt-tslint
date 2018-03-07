@@ -23,6 +23,7 @@ module.exports = function (grunt) {
     grunt.registerMultiTask("tslint", "A linter for TypeScript.", function () {
         var options = this.options({
             configuration: null,
+            project: null,
             formatter: "prose",
             outputFile: null,
             outputReport: null,
@@ -62,7 +63,11 @@ module.exports = function (grunt) {
                     rulesDirectory: options.rulesDirectory,
                 };
 
-                var linter = new Linter.Linter(lintOptions);
+                var program;
+                if (options.project != null) {
+                    program = Linter.Linter.createProgram(options.project);
+                }
+                var linter = new Linter.Linter(lintOptions, program);
                 var contents = grunt.file.read(filepath);
                 linter.lint(filepath, contents, configuration);
                 var result = linter.getResult();
