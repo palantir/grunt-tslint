@@ -42,6 +42,11 @@ module.exports = function (grunt) {
         var outputFile = options.outputFile;
         var appendToOutput = options.appendToOutput;
 
+        var program;
+        if (options.project != null) {
+            program = Linter.Linter.createProgram(options.project);
+        }
+
         // Iterate over all specified file groups, async for 'streaming' output on large projects
         grunt.util.async.reduce(this.filesSrc, true, function (success, filepath, callback) {
             if (!grunt.file.exists(filepath)) {
@@ -63,10 +68,6 @@ module.exports = function (grunt) {
                     rulesDirectory: options.rulesDirectory,
                 };
 
-                var program;
-                if (options.project != null) {
-                    program = Linter.Linter.createProgram(options.project);
-                }
                 var linter = new Linter.Linter(lintOptions, program);
                 var contents = grunt.file.read(filepath);
                 linter.lint(filepath, contents, configuration);
