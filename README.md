@@ -38,6 +38,7 @@ grunt.initConfig({
 ### Options
 
 * `options.configuration: Object | string` - A TSLint configuration; can either be a JSON configuration object or a path to a tslint.json config file.
+* `options.project: string` - `tsconfig.json` file location. If provided type checking will be enabled. 
 * `options.force: boolean` - If `true`, the task will suceed even if lint failures are found. Defaults to `false`.
 * `options.fix: boolean` - If `true`, fixes linting errors for select rules. This may overwrite linted files. Defaults to `false`.
 

@@ -35,6 +35,13 @@ describe('grunt-tslint on a single file', function() {
             done();
         });
     });
+
+    it('should find errors in single invalid .ts file that requires type checking', function(done) {
+        execGrunt('--gruntfile ' + fixture('Gruntfile.js', 'requires-type-checking'), function(error, stdout, stderr) {
+            expect(stdout).to.match(/1 error and 0 warnings in 1 file/);
+            done();
+        });
+    });
 });
 
 describe('grunt-tslint on multiple files', function() {
